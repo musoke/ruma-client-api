@@ -107,10 +107,7 @@ pub mod join_room_by_id {
             pub third_party_signed: Option<ThirdPartySigned>,
         }
 
-        response {
-            /// The room that the user joined.
-            pub room_id: RoomId,
-        }
+        response {}
     }
 }
 
