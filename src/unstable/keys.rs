@@ -10,6 +10,7 @@ pub mod upload {
 
     // TODO: does ruma have a type for device ids already?
     type DeviceID = String;
+    type AlgoName = String;
 
     ruma_api! {
         metadata {
@@ -44,7 +45,7 @@ pub mod upload {
         /// The ID of the device
         device_id: DeviceID,
         /// Supported algorithms
-        algorithms: Vec<String>,
+        algorithms: Vec<AlgoName>,
         /// Public identity keys
         keys: HashMap<String, String>,
         /// Signatures for the object
@@ -62,6 +63,7 @@ pub mod query {
 
     type DeviceID = String;
     type Homeserver = String;
+    type AlgoName = String;
 
     ruma_api! {
         metadata {
@@ -99,7 +101,7 @@ pub mod query {
         /// The ID of the device
         device_id: DeviceID,
         /// Supported algorithms
-        algorithms: Vec<String>,
+        algorithms: Vec<AlgoName>,
         /// Public identity keys
         keys: HashMap<String, String>,
         /// Signatures for the object
