@@ -110,3 +110,49 @@ pub mod query {
         unsigned: String,
     }
 }
+
+
+/// [POST /_matrix/client/unstable/keys/claim](https://matrix.org/speculator/spec/drafts%2Fe2e/client_server/unstable.html#post-matrix-client-unstable-keys-claim)
+pub mod claim {
+    use ruma_api_macros::ruma_api;
+    use ruma_identifiers::UserId;
+    use std::collections::HashMap;
+
+    type DeviceID = String;
+    type Homeserver = String;
+    type AlgoName = String;
+    type AlgoNameKeyId = String;
+    type Key = String;
+
+    ruma_api! {
+        metadata {
+            description: "Claims one-time keys for use in pre-key messages.",
+            method: Method::Post,
+            name: "claim",
+            path: "/_matrix/client/unstable/keys/claim",
+            // TODO: spec mentions there should be rate limiting, but not at definition of this
+            // endpoint
+            rate_limited: true,
+            requires_authentication: true,
+        }
+
+        request{
+            /// Time (in milliseconds) to wait when downloading keys from remote servers
+            ///
+            /// 10 seconds is the recommended default
+            // TODO: set default?
+            timeout: u64,
+            /// Users corresponding devices for which to get keys
+            pub one_time_keys: HashMap<UserId, HashMap<DeviceID, AlgoName>>,
+        }
+
+        response{
+            /// Homeservers which could not be reached
+            failures: HashMap<Homeserver, String>,
+            /// Information on the queried devices
+            one_time_keys: HashMap<UserId, HashMap<AlgoNameKeyId, Key>>
+        }
+    }
+}
+
+// TODO: /keys/changes
