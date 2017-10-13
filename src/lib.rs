@@ -46,3 +46,8 @@ pub mod r0 {
 }
 
 pub mod unversioned;
+
+/// Endpoints for the unstable versions of the client API specification.
+pub mod unstable {
+    pub mod keys;
+}
