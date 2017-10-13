@@ -1,11 +1,15 @@
-//! Endpoints for managing end-toend ecryption keys
+//! Endpoints for managing end-to-end encryption keys
+//!
+//! Note that this endpoint is currently unstable.
 
-/// [POST
-/// [/_matrix/client/unstable/keys/upload](https://matrix.org/speculator/spec/drafts%2Fe2e/client_server/unstable.html#id330)
+/// [POST /_matrix/client/unstable/keys/upload](https://matrix.org/speculator/spec/drafts%2Fe2e/client_server/unstable.html#post-matrix-client-unstable-keys-upload)
 pub mod upload {
     use ruma_api_macros::ruma_api;
     use ruma_identifiers::UserId;
     use std::collections::HashMap;
+
+    // TODO: does ruma have a type for device ids already?
+    type DeviceID = String;
 
     ruma_api! {
         metadata {
@@ -38,7 +42,7 @@ pub mod upload {
         /// The ID of the user
         user_id: UserId,
         /// The ID of the device
-        device_id: String,
+        device_id: DeviceID,
         /// Supported algorithms
         algorithms: Vec<String>,
         /// Public identity keys
