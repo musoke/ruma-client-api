@@ -5,6 +5,7 @@
 pub mod upload {
     use ruma_api_macros::ruma_api;
     use ruma_identifiers::UserId;
+    use std::collections::HashMap;
 
     ruma_api! {
         metadata {
@@ -22,14 +23,12 @@ pub mod upload {
             pub device_keys: Option<DeviceKeys>,
             /// One-time public keys for "pre-key" messages
             #[serde(skip_serializing_if = "Option::is_none")]
-            // should be Option<array>
-            pub one_time_keys: Option<String>,
+            pub one_time_keys: Option<HashMap<String, String>>,
         }
 
         response{
             /// The number of unclaimed one-time keys remaining for each algorithm
-            // should be dict {string: string}
-            one_time_key_counts: Vec<String>
+            one_time_key_counts: HashMap<String, u64>
         }
     }
 
@@ -43,10 +42,10 @@ pub mod upload {
         /// Supported algorithms
         algorithms: Vec<String>,
         /// Public identity keys
-        // should be dict {string: string}
-        keys: String,
+        keys: HashMap<String, String>,
         /// Signatures for the object
-        // should be dict {string: {string: string}}
+        // should be dict {string: {string: string}}, but is that taken care of by
+        // ruma_signatures::sign_json?
         signatures: String,
     }
 }
