@@ -49,9 +49,23 @@ pub mod upload {
         /// Public identity keys
         keys: HashMap<String, String>,
         /// Signatures for the object
-        // should be dict {string: {string: string}}, but is that taken care of by
-        // ruma_signatures::sign_json?
         signatures: String,
+    }
+
+    /// Identity keys unsigned
+    ///
+    /// Should be able to serialize this, sign it, insert a signature, and deserialize as
+    /// DeviceKeys
+    #[derive(Clone, Debug, Deserialize, Serialize)]
+    pub struct DeviceKeysUnsigned {
+        /// The ID of the user
+        user_id: UserId,
+        /// The ID of the device
+        device_id: DeviceID,
+        /// Supported algorithms
+        algorithms: Vec<AlgoName>,
+        /// Public identity keys
+        keys: HashMap<String, String>,
     }
 }
 
