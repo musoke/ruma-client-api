@@ -2,16 +2,39 @@
 //!
 //! Note that this endpoint is currently unstable.
 
+use std::collections::HashMap;
+use ruma_identifiers::UserId;
+use ruma_signatures::Signatures;
+//
+// TODO: does ruma have a type for device ids already?
+type DeviceID = String;
+type AlgoName = String;
+
+/// Identity keys
+#[derive(Clone, Debug, Deserialize, Serialize)]
+pub struct DeviceKeys {
+    /// The ID of the user
+    pub user_id: UserId,
+    /// The ID of the device
+    pub device_id: DeviceID,
+    /// Supported algorithms
+    pub algorithms: Vec<AlgoName>,
+    /// Public identity keys
+    pub keys: HashMap<String, String>,
+    /// Signatures for the object
+    pub signatures: Signatures,
+    /// Additional data added by intermediate servers
+    ///
+    /// This should normally be empty when `DeviceKeys` is used in the `upload` endpoint.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub unsigned: Option<String>,
+}
+
 /// [POST /_matrix/client/unstable/keys/upload](https://matrix.org/speculator/spec/drafts%2Fe2e/client_server/unstable.html#post-matrix-client-unstable-keys-upload)
 pub mod upload {
     use ruma_api_macros::ruma_api;
-    use ruma_identifiers::UserId;
     use std::collections::HashMap;
-    use ruma_signatures::Signatures;
-
-    // TODO: does ruma have a type for device ids already?
-    type DeviceID = String;
-    type AlgoName = String;
+    use super::DeviceKeys;
 
     ruma_api! {
         metadata {
@@ -37,21 +60,6 @@ pub mod upload {
             one_time_key_counts: HashMap<String, u64>
         }
     }
-
-    /// Identity keys
-    #[derive(Clone, Debug, Deserialize, Serialize)]
-    pub struct DeviceKeys {
-        /// The ID of the user
-        pub user_id: UserId,
-        /// The ID of the device
-        pub device_id: DeviceID,
-        /// Supported algorithms
-        pub algorithms: Vec<AlgoName>,
-        /// Public identity keys
-        pub keys: HashMap<String, String>,
-        /// Signatures for the object
-        pub signatures: Signatures,
-    }
 }
 
 /// [POST /_matrix/client/unstable/keys/query](https://matrix.org/speculator/spec/drafts%2Fe2e/client_server/unstable.html#post-matrix-client-unstable-keys-query)
@@ -59,11 +67,10 @@ pub mod query {
     use ruma_api_macros::ruma_api;
     use ruma_identifiers::UserId;
     use std::collections::HashMap;
-    use ruma_signatures::Signatures;
+    use super::DeviceKeys;
 
-    type DeviceID = String;
     type Homeserver = String;
-    type AlgoName = String;
+    type DeviceID = String;
 
     ruma_api! {
         metadata {
@@ -91,23 +98,6 @@ pub mod query {
             /// Information on the queried devices
             device_keys: HashMap<UserId, HashMap<DeviceID, DeviceKeys>>
         }
-    }
-
-    /// Identity keys
-    #[derive(Clone, Debug, Deserialize, Serialize)]
-    pub struct DeviceKeys {
-        /// The ID of the user
-        pub user_id: UserId,
-        /// The ID of the device
-        pub device_id: DeviceID,
-        /// Supported algorithms
-        pub algorithms: Vec<AlgoName>,
-        /// Public identity keys
-        pub keys: HashMap<String, String>,
-        /// Signatures for the object
-        pub signatures: Signatures,
-        /// Additional data added by intermediate servers
-        pub unsigned: String,
     }
 }
 
