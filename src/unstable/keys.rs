@@ -42,15 +42,15 @@ pub mod upload {
     #[derive(Clone, Debug, Deserialize, Serialize)]
     pub struct DeviceKeys {
         /// The ID of the user
-        user_id: UserId,
+        pub user_id: UserId,
         /// The ID of the device
-        device_id: DeviceID,
+        pub device_id: DeviceID,
         /// Supported algorithms
-        algorithms: Vec<AlgoName>,
+        pub algorithms: Vec<AlgoName>,
         /// Public identity keys
-        keys: HashMap<String, String>,
+        pub keys: HashMap<String, String>,
         /// Signatures for the object
-        signatures: Signatures,
+        pub signatures: Signatures,
     }
 }
 
@@ -97,17 +97,17 @@ pub mod query {
     #[derive(Clone, Debug, Deserialize, Serialize)]
     pub struct DeviceKeys {
         /// The ID of the user
-        user_id: UserId,
+        pub user_id: UserId,
         /// The ID of the device
-        device_id: DeviceID,
+        pub device_id: DeviceID,
         /// Supported algorithms
-        algorithms: Vec<AlgoName>,
+        pub algorithms: Vec<AlgoName>,
         /// Public identity keys
-        keys: HashMap<String, String>,
+        pub keys: HashMap<String, String>,
         /// Signatures for the object
-        signatures: Signatures,
+        pub signatures: Signatures,
         /// Additional data added by intermediate servers
-        unsigned: String,
+        pub unsigned: String,
     }
 }
 
