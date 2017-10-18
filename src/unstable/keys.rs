@@ -7,6 +7,7 @@ pub mod upload {
     use ruma_api_macros::ruma_api;
     use ruma_identifiers::UserId;
     use std::collections::HashMap;
+    use ruma_signatures::Signatures;
 
     // TODO: does ruma have a type for device ids already?
     type DeviceID = String;
@@ -49,23 +50,7 @@ pub mod upload {
         /// Public identity keys
         keys: HashMap<String, String>,
         /// Signatures for the object
-        signatures: String,
-    }
-
-    /// Identity keys unsigned
-    ///
-    /// Should be able to serialize this, sign it, insert a signature, and deserialize as
-    /// DeviceKeys
-    #[derive(Clone, Debug, Deserialize, Serialize)]
-    pub struct DeviceKeysUnsigned {
-        /// The ID of the user
-        user_id: UserId,
-        /// The ID of the device
-        device_id: DeviceID,
-        /// Supported algorithms
-        algorithms: Vec<AlgoName>,
-        /// Public identity keys
-        keys: HashMap<String, String>,
+        signatures: Signatures,
     }
 }
 
@@ -74,6 +59,7 @@ pub mod query {
     use ruma_api_macros::ruma_api;
     use ruma_identifiers::UserId;
     use std::collections::HashMap;
+    use ruma_signatures::Signatures;
 
     type DeviceID = String;
     type Homeserver = String;
@@ -119,7 +105,7 @@ pub mod query {
         /// Public identity keys
         keys: HashMap<String, String>,
         /// Signatures for the object
-        signatures: HashMap<String, HashMap<String, String>>,
+        signatures: Signatures,
         /// Additional data added by intermediate servers
         unsigned: String,
     }
