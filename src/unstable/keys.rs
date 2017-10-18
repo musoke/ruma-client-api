@@ -4,7 +4,7 @@
 
 use std::collections::HashMap;
 use ruma_identifiers::UserId;
-use ruma_signatures::Signatures;
+use ruma_signatures::UserSignatures;
 //
 // TODO: does ruma have a type for device ids already?
 type DeviceID = String;
@@ -22,7 +22,7 @@ pub struct DeviceKeys {
     /// Public identity keys
     pub keys: HashMap<String, String>,
     /// Signatures for the object
-    pub signatures: Signatures,
+    pub signatures: UserSignatures,
     /// Additional data added by intermediate servers
     ///
     /// This should normally be empty when `DeviceKeys` is used in the `upload` endpoint.
