@@ -32,3 +32,7 @@ branch = "synapse-workarounds"
 [dependencies.ruma-events]
 git = "https://github.com/jplatte/ruma-events"
 branch = "synapse-workarounds"
+
+[dependencies.e2e-types]
+git = "https://github.com/musoke/e2e-types"
+version = "0.1.0"

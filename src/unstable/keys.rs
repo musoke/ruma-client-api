@@ -5,9 +5,10 @@
 use std::collections::HashMap;
 use ruma_identifiers::UserId;
 use ruma_signatures::UserSignatures;
-//
+use e2e_types::device::DeviceId;
+
 // TODO: does ruma have a type for device ids already?
-type DeviceID = String;
+type DeviceID = DeviceId;
 type AlgoName = String;
 
 /// Identity keys
@@ -68,9 +69,10 @@ pub mod query {
     use ruma_identifiers::UserId;
     use std::collections::HashMap;
     use super::DeviceKeys;
+    use e2e_types::device::DeviceId;
 
     type Homeserver = String;
-    type DeviceID = String;
+    type DeviceID = DeviceId;
 
     ruma_api! {
         metadata {
@@ -100,7 +102,6 @@ pub mod query {
         }
     }
 }
-
 
 /// [POST /_matrix/client/unstable/keys/claim](https://matrix.org/speculator/spec/drafts%2Fe2e/client_server/unstable.html#post-matrix-client-unstable-keys-claim)
 pub mod claim {

@@ -5,6 +5,7 @@
 #![deny(missing_debug_implementations, missing_docs)]
 #![feature(associated_consts, proc_macro, try_from)]
 
+extern crate e2e_types;
 extern crate futures;
 extern crate hyper;
 extern crate ruma_api;
